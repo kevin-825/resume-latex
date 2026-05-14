@@ -9,7 +9,3 @@ underlying LaTeX structure as a template, but please do not
 copy the professional summaries or experience descriptions.
 
 
-
-mkdir -p sections  .docker && \
-touch resume.cls sections/header.tex sections/skills.tex sections/experience.tex sections/education.tex sections/projects.tex 
-
