@@ -1,6 +1,5 @@
 name: Build Resume PDF
 
-# Trigger the build automatically every time you push to the main branch
 on:
   push:
     branches:
@@ -11,20 +10,17 @@ jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: GitHub's server downloads your repository code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: GitHub uses a Dockerized LaTeX environment to compile your code
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: main.tex
-          # The action will automatically read your Makefile or compile main.tex directly
+      # Because GitHub's Ubuntu runners come with Docker pre-installed,
+      # we can literally just trigger your existing Makefile!
+      - name: Build all templates
+        run: make all
 
-      # Step 3: GitHub takes the generated main.pdf and saves it as an "Artifact"
-      - name: Upload PDF Artifact
+      # Upload any PDF generated in the root directory
+      - name: Upload PDF Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Kevin_Aimaier_Resume
-          path: main.pdf
+          name: Kevin_Aimaier_Resumes
+          path: '*.pdf'
