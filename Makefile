@@ -1,10 +1,5 @@
-# Search path for LaTeX: Look in current dir, then in /workdir/sections
 export TEXINPUTS := .:/workdir/sections:
-
-# Use $(CURDIR) instead of $(PWD) for CI/CD compatibility
 DOCKER_FLAGS = --rm -v $(CURDIR):/workdir -e TEXINPUTS=$(TEXINPUTS)
-
-# The Image
 IMAGE = texlive/texlive
 
 .PHONY: classic modern all clean
