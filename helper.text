@@ -1,0 +1,28 @@
+mkdir -p sections  && \
+touch resume.cls sections/header.tex \
+sections/skills.tex sections/experience.tex \
+sections/education.tex sections/projects.tex \
+Makefile 
+
+cat <<EOF > main.tex
+\documentclass{resume}
+
+\begin{document}
+\input{sections/header}
+\input{sections/skills}
+\input{sections/experience}
+\input{sections/projects}
+\end{document}
+EOF
+cat <<EOF > Makefile
+# PDF Generation via Docker (texlive)
+PDF_ENGINE=pdflatex
+SOURCE=main.tex
+OUTPUT=resume.pdf
+
+all:
+	docker run --rm -v \$(PWD):/workdir texlive/texlive \$(PDF_ENGINE) \$(SOURCE)
+
+clean:
+	rm -f *.aux *.log *.out \$(OUTPUT)
+EOF
